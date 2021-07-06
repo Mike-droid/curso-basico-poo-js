@@ -1,3 +1,5 @@
+import Comment from './comment.js'
+
 export default class Student {
   constructor({
     id,
@@ -81,11 +83,19 @@ export default class Student {
     this._learningPaths = newLearningPaths;
   }
 
-  get _socialMedia () {
+  publicarComentario(commentContent) {
+    const comment = new Comment({
+      content: commentContent,
+      studentName: this.name
+    })
+    comment.publicar()
+  }
+
+  /*get _socialMedia () {
     return this._socialMedia;
   }
 
   set _socialMedia (newSocialMedia) {
     this._socialMedia = newSocialMedia;
-  }
+  }*/
 };

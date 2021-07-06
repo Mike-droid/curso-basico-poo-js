@@ -586,3 +586,118 @@ const FreddyVega = new Teacher({
 });
 FreddyVega.teachClass(FreddyVega._name, FreddyVega._speciality)
 ```
+
+## Pilares de la POO: herencia y polimorfismo
+
+### Qué es herencia
+
+La herencia nos permite crear "clases madre", la cual servirá de molde para clases hijas, que compartirán sus métodos y atributos.
+Usamos la palabra reservada `extends`.
+
+### Herencia en JS
+
+Para usar herencia en JS, basta con:
+
+```javascript
+import Student from './student.js'
+
+export default class ExpertStudent extends Student {
+  constructor(props) {
+    super(props) //*Llama al constructor de la clase madre
+  }
+
+  approveCourse(newCourse) {
+    this.approvedCourses.push(newCourse)
+  }
+}
+```
+
+### Qué es polimorfismo
+
+Es como la herencia 2.0. Permite cambiar e incluso anular los métodos y atributos de una super clase.
+
+Tipos de polimorfismo:
+
+- Sobrecarga
+- Paramétrico
+- Inclusión
+
+### Polimorfismo en JS
+
+student.js:
+
+```javascript
+import Comment from './comment.js'
+publicarComentario(commentContent) {
+    const comment = new Comment({
+      content: commentContent,
+      studentName: this.name
+    })
+    comment.publicar()
+  }
+```
+
+---
+comment.js:
+
+```javascript
+export default class Comment {
+  constructor({
+    content,
+    studentName,
+    studentRole = "Estudiante",
+  }){
+    this.content = content;
+    this.studentName = studentName;
+    this.studentRole = studentRole;
+    this.likes = 0
+  }
+
+  publicar() {
+    console.log(`${this.studentName} ( ${this.studentRole} )`)
+    console.log(`${this.likes} likes`)
+    console.log(`${this.content}`)
+  }
+}
+```
+
+---
+teacherStudent.js:
+
+```javascript
+import Student from './student.js'
+import Comment from './comment.js'
+
+export default class TeacherStudent extends Student {
+  constructor(props) {
+    super(props)
+  }
+
+  approveCourse(newCourse) {
+    this.approvedCourses.push(newCourse)
+  }
+
+  publicarComentario(commentContent) {
+    const comment = new Comment({
+      content: commentContent,
+      studentName: this.name,
+      studentRole: "Professor"
+    })
+    comment.publicar()
+  }
+}
+```
+
+---
+main.js:
+
+```javascript
+const freddy = new TeacherStudent({
+  name: 'Freddy Vega',
+  username: 'freddier',
+  email: 'freddy@gmail.com',
+  instagram: "freddiervega"
+})
+console.log(freddy)
+console.log(freddy.publicarComentario("Soy el profe y espero que le den 5 estrellas"))
+```

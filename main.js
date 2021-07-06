@@ -3,6 +3,11 @@ import Course from './course.js'
 import Lesson from './lesson.js'
 import LearningPath from './learningPath.js'
 import Student from './student.js'
+import FreeStudent from './freeStudent.js'
+import BasicStudent from './basicStudent.js'
+import ExpertStudent from './expertStudent.js'
+import Comment from './comment.js'
+import TeacherStudent from './teacherStudent.js'
 
 
 //* Teachers ---------------------
@@ -41,16 +46,18 @@ const cursoProgramacionBasica = new Course({
   name: "Curso gratis de programación básica",
   classes: [lesson1PB],
   teacher: FreddyVega,
+  isFree: true
 });
 console.log(cursoProgramacionBasica);
-console.log(cursoProgramacionBasica.name = 'Curso Gratis')
+//console.log(cursoProgramacionBasica.name = 'Curso Gratis')
 //console.log(cursoProgramacionBasica.name = 'Curso Malito de Programación Básica') //* Da un error
 
 const cursoIntroMarketingDigital = new Course({
   id: 2,
   name: 'Curso de Introducción al Marketing Digital',
   classes: [lesson1DM],
-  teacher: ClauAlderete
+  teacher: ClauAlderete,
+  lang: "English",
 });
 console.log(cursoIntroMarketingDigital);
 
@@ -72,7 +79,7 @@ console.log(escuelaMarketingDigital);
 
 
 //* Estudiantes ---------------------
-const miguel = new Student({
+const miguel = new ExpertStudent({
   id: 1,
   name: 'Miguel',
   email: 'miguel@gmail.com',
@@ -82,3 +89,34 @@ const miguel = new Student({
   learningPaths: [escuelaDesarrolloWeb]
 });
 console.log(miguel);
+console.log(miguel.publicarComentario("Me encantó el curso"))
+
+const juan = new FreeStudent({
+  id: 2,
+  name: 'Juan',
+  email: 'juan@gmail.com',
+  username: 'juanDC',
+  points:  100000,
+})
+console.log(juan)
+juan.approveCourse(cursoProgramacionBasica)
+juan.approveCourse(cursoIntroMarketingDigital)
+console.log(juan.approvedCourses)
+
+const daniel = new BasicStudent({
+  id: 3,
+  name: 'Daniel',
+})
+console.log(daniel)
+daniel.approveCourse(cursoProgramacionBasica)
+daniel.approveCourse(cursoIntroMarketingDigital)
+console.log(daniel.approvedCourses)
+
+const freddy = new TeacherStudent({
+  name: 'Freddy Vega',
+  username: 'freddier',
+  email: 'freddy@gmail.com',
+  instagram: "freddiervega"
+})
+console.log(freddy)
+console.log(freddy.publicarComentario("Soy el profe y espero que le den 5 estrellas"))
