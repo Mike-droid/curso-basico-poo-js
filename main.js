@@ -1,103 +1,84 @@
-class LearningPaths {
-  constructor({
-    id,
-    title,
-    courses,
-    logo,
-  }) {
-    this.id = id;
-    this.title = title;
-    this.courses = courses;
-    this.logo = logo;
-    this.coursesQuantity = courses.length;
-  }
-}
+import Teacher from './teacher.js'
+import Course from './course.js'
+import Lesson from './lesson.js'
+import LearningPath from './learningPath.js'
+import Student from './student.js'
 
-const escuelaDesarrolloWeb = new LearningPaths({
+
+//* Teachers ---------------------
+const FreddyVega = new Teacher({
+  id: 1,
+  name: 'Freddy Vega',
+  speciality: 'Emprendimiento',
+});
+FreddyVega.teachClass(FreddyVega._name, FreddyVega._speciality)
+
+const ClauAlderete = new Teacher({
+  id: 2,
+  name: 'Clau Alderete',
+  speciality: 'Digital Marketing',
+});
+console.log(ClauAlderete);
+
+
+//* Lecciones -----------------------
+const lesson1PB = new Lesson({
+  id: 1,
+  title: 'Clase 1 Programación Básica',
+});
+console.log(lesson1PB);
+
+const lesson1DM = new Lesson({
+  id: 2,
+  title: 'Clase 1 Marketing Digital',
+});
+console.log(lesson1DM);
+
+
+//* Cursos ----------------------------
+const cursoProgramacionBasica = new Course({
+  id: 1,
+  name: "Curso gratis de programación básica",
+  classes: [lesson1PB],
+  teacher: FreddyVega,
+});
+console.log(cursoProgramacionBasica);
+console.log(cursoProgramacionBasica.name = 'Curso Gratis')
+//console.log(cursoProgramacionBasica.name = 'Curso Malito de Programación Básica') //* Da un error
+
+const cursoIntroMarketingDigital = new Course({
+  id: 2,
+  name: 'Curso de Introducción al Marketing Digital',
+  classes: [lesson1DM],
+  teacher: ClauAlderete
+});
+console.log(cursoIntroMarketingDigital);
+
+
+//* Escuelas ---------------------
+const escuelaDesarrolloWeb = new LearningPath({
   id: 1,
   title: 'Escuela de Desarrollo Web',
-  courses: ['Curso Definitivo de HTML y CSS', 'Curso de Responsive Design', 'Curso de JS POO', 'Curso de Frameworks de JS', 'Curso de Node.js'],
-  logo: 'Logo Web Dev',
+  courses: [cursoProgramacionBasica],
 });
+console.log(escuelaDesarrolloWeb);
 
-const escuelaMarketingDigital = new LearningPaths({
+const escuelaMarketingDigital = new LearningPath({
   id: 2,
   title: 'Marketing Digital',
-  courses: ['Curso de introducción al Marketing Digital', 'Curso de Excel Básico', 'Curso de SEO Técnico'],
-  logo: 'Logo MD',
+  courses: [cursoIntroMarketingDigital],
 });
+console.log(escuelaMarketingDigital);
 
-const escuelaHabilidadesBlandas = new LearningPaths({
-  id: 3,
-  title: 'Habilidades Blandas',
-  courses: ['Curso de inteligencia emocional', 'Herramientas para el crecimiento personal'],
-  logo: 'Rojito bonito',
-});
 
-const escuelaFinanzas = new LearningPaths({
-  id: 4,
-  title: 'Finanzas e Inversiones',
-  courses: ['Curso de Introducción a la Educación Financiera', 'Curso de Finanzas Personales', 'Curso de Planeación Financiera'],
-  logo: 'Dorado',
-});
-
-const escuelaIngles = new LearningPaths({
-  id: 5,
-  title: 'English Academy',
-  courses: ['English 1', 'English 2', 'English 3'],
-  logo: 'Red',
-});
-
-class Student {
-  constructor({
-    id,
-    name,
-    email,
-    username,
-    points = 0,
-    twitter = undefined,
-    instagram = undefined,
-    facebook = undefined,
-    approvedCourses = [],
-    learningPaths = [],
-  }) {
-    this.id = id;
-    this.name = name;
-    this.email = email;
-    this.username = username;
-    this.points = points;
-    this.approvedCourses = approvedCourses;
-    this.learningPaths = learningPaths;
-    this.socialMedia = {
-      twitter,
-      instagram,
-      facebook,
-    };
-  }
-}
-
+//* Estudiantes ---------------------
 const miguel = new Student({
   id: 1,
   name: 'Miguel',
   email: 'miguel@gmail.com',
   username: 'mike',
-  twitter: '@miguelAngelRe28',
-  learningPaths: [
-    escuelaDesarrolloWeb,
-    escuelaHabilidadesBlandas,
-    escuelaFinanzas
-  ]
+  points: 40000,
+  approvedCourses: [cursoProgramacionBasica],
+  learningPaths: [escuelaDesarrolloWeb]
 });
-
-const ximena = new Student({
-  id: 2,
-  name: 'Ximena',
-  email: 'ximena@gmail.com',
-  username: 'ximena',
-  learningPaths: [
-    escuelaMarketingDigital,
-    escuelaFinanzas,
-    escuelaHabilidadesBlandas,
-    escuelaIngles
-  ],
-});
+console.log(miguel);

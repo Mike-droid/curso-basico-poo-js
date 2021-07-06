@@ -310,3 +310,279 @@ const ximena = new Student({
   ],
 });
 ```
+
+## Pilares de  la POO: abstracción y encapsulamiento
+
+### Qué es abstracción
+
+Podemos ver a la abstracción como una generalización de los objetos del mundo real.
+
+### Abstracción en JS
+
+main.js:
+
+```javascript
+import Teacher from './teacher.js'
+import Course from './course.js'
+import Lesson from './lesson.js'
+import LearningPath from './learningPath.js'
+import Student from './student.js'
+
+
+//* Teachers ---------------------
+const FreddyVega = new Teacher({
+  id: 1,
+  name: 'Freddy Vega',
+  speciality: 'CEO',
+});
+console.log(FreddyVega);
+
+const ClauAlderete = new Teacher({
+  id: 2,
+  name: 'Clau Alderete',
+  speciality: 'Digital Marketing',
+});
+console.log(ClauAlderete);
+
+
+//* Lecciones -----------------------
+const lesson1PB = new Lesson({
+  id: 1,
+  title: 'Clase 1 Programación Básica',
+});
+console.log(lesson1PB);
+
+const lesson1DM = new Lesson({
+  id: 2,
+  title: 'Clase 1 Marketing Digital',
+});
+console.log(lesson1DM);
+
+
+//* Cursos ----------------------------
+const cursoProgramacionBasica = new Course({
+  id: 1,
+  name: "Curso gratis de programación básica",
+  classes: [lesson1PB],
+  teacher: FreddyVega,
+});
+console.log(cursoProgramacionBasica);
+
+const cursoIntroMarketingDigital = new Course({
+  id: 2,
+  name: 'Curso de Introducción al Marketing Digital',
+  classes: [lesson1DM],
+  teacher: ClauAlderete
+});
+console.log(cursoIntroMarketingDigital);
+
+
+//* Escuelas ---------------------
+const escuelaDesarrolloWeb = new LearningPath({
+  id: 1,
+  title: 'Escuela de Desarrollo Web',
+  courses: [cursoProgramacionBasica],
+});
+console.log(escuelaDesarrolloWeb);
+
+const escuelaMarketingDigital = new LearningPath({
+  id: 2,
+  title: 'Marketing Digital',
+  courses: [cursoIntroMarketingDigital],
+});
+console.log(escuelaMarketingDigital);
+
+
+//* Estudiantes ---------------------
+const miguel = new Student({
+  id: 1,
+  name: 'Miguel',
+  email: 'miguel@gmail.com',
+  username: 'mike',
+  points: 40000,
+  approvedCourses: [cursoProgramacionBasica],
+  learningPaths: [escuelaDesarrolloWeb]
+});
+console.log(miguel);
+```
+
+---
+
+Teacher.js:
+
+```javascript
+export default class Teacher {
+  constructor({
+    id,
+    name,
+    speciality,
+  }) {
+    this.id = id;
+    this.name = name;
+    this.speciality = speciality;
+  }
+};
+```
+
+---
+
+Lecciones.js:
+
+```javascript
+export default class Lesson {
+  constructor({
+    id,
+    title,
+  }){
+    this.id = id;
+    this.title = title;
+  };
+};
+```
+
+---
+
+course.js:
+
+```javascript
+export default class Course {
+  constructor({
+    id,
+    name,
+    classes = [],
+    teacher,
+  }){
+    this.id = id;
+    this.name = name;
+    this.classes = classes;
+    this.teacher = teacher;
+  };
+}
+```
+
+---
+
+Learning Path:
+
+```javascript
+export default class LearningPath {
+  constructor({
+    id,
+    title,
+    courses = [],
+  }) {
+    this.id = id;
+    this.title = title;
+    this.courses = courses;
+    this.coursesQuantity = courses.length;
+  }
+};
+```
+
+---
+
+student.js:
+
+```javascript
+export default class Student {
+  constructor({
+    id,
+    name,
+    email,
+    username,
+    points = 0,
+    twitter = undefined,
+    instagram = undefined,
+    facebook = undefined,
+    approvedCourses = [],
+    learningPaths = [],
+  }) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.username = username;
+    this.points = points;
+    this.approvedCourses = approvedCourses;
+    this.learningPaths = learningPaths;
+    this.socialMedia = {
+      twitter,
+      instagram,
+      facebook,
+    };
+  }
+};
+```
+
+### Qué es encapsulamiento
+
+Se trata de proteger los datos.
+
+- Esconder métodos y atributos -> Pero en realidad no podemos hacer esto en JS
+- No permitir la alteración de métodos y atributos
+- Getters y settes
+- Namespaces
+- Object.defineProperties
+- Módulos de ES6
+
+### Getters y Setters en JS
+
+### Módulos con ECMAScript 6
+
+teacher.js:
+
+```javascript
+export default class Teacher {
+  constructor({
+    id,
+    name,
+    speciality,
+  }) {
+    this._id = id;
+    this._name = name;
+    this._speciality = speciality;
+  }
+
+  get id () {
+    return this._id;
+  }
+
+  set id (newID) {
+    this._id = newID;
+  }
+
+  get name () {
+    return this._name;
+  }
+
+  set name (newName) {
+    this._name = newName;
+  }
+
+  get speciality () {
+    return this._speciality;
+  }
+
+  set speciality (newSpeciality) {
+    this._speciality = newSpeciality;
+  }
+
+  teachClass() {
+    teach(this._name, this._speciality)
+  }
+};
+
+function teach(teacherName, teacherSpeciality){
+  console.log(`Soy ${teacherName} y estoy enseñando ${teacherSpeciality}`)
+}
+```
+
+main.js:
+
+```javascript
+const FreddyVega = new Teacher({
+  id: 1,
+  name: 'Freddy Vega',
+  speciality: 'Emprendimiento',
+});
+FreddyVega.teachClass(FreddyVega._name, FreddyVega._speciality)
+```
